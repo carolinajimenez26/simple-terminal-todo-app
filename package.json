@@ -1,0 +1,22 @@
+{
+  "name": "simple-terminal-todo-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carolinajimenez26/simple-terminal-todo-app.git"
+  },
+  "author": "Carolina Jimenez Gomez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/carolinajimenez26/simple-terminal-todo-app/issues"
+  },
+  "homepage": "https://github.com/carolinajimenez26/simple-terminal-todo-app#readme",
+  "devDependencies": {
+    "colors": "^1.4.0"
+  }
+}
