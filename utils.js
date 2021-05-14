@@ -28,12 +28,32 @@ const pause = async () => {
       message: "Do you confirm your selection?",
     }
   ]);
-  console.log({ choice });
   return choice;
 };
 
+const getExitOption = (options) => {
+  let exitOption = null;
+  options.forEach((opt) => {
+    if (opt.name.includes("Exit")) {
+      exitOption = opt.value;
+    }
+  });
+  return exitOption;
+};
+
 const handleOption = (option) => {
-  console.log(`You selected ${option}`);
+  switch (option) {
+    case "add":
+    case "showTasks": 
+    case "modify": 
+    case "delete": 
+    case "mark": 
+    case "showInfo":
+      console.log("I can handle it :D");
+      break;
+    default:
+    console.error("Error");
+  }
 };
 
 module.exports = {

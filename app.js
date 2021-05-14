@@ -1,40 +1,47 @@
 require('colors');
-const { showMenu, pause, handleOption } = require('./utils');
+const { 
+  showMenu, 
+  pause,
+  handleOption,
+} = require('./utils');
 
+const message = "Select an option:".magenta;
 const options = [
   {
-    value: 1,
+    value: "add",
     name: `${"1".magenta}. Add task`,
   },
   {
-    value: 2,
+    value: "showTasks",
     name: `${"2".magenta}. Show tasks`,
   },
   {
-    value: 3,
+    value: "modify",
     name: `${"3".magenta}. Modify task`,
   },
   {
-    value: 4,
+    value: "delete",
     name: `${"4".magenta}. Delete task`,
   },
   {
-    value: 5,
+    value: "mark",
     name: `${"5".magenta}. Mark as done`,
   },
   {
-    value: 6,
-    name: `${"6".magenta}. Exit`,
+    value: "showInfo",
+    name: `${"6".magenta}. Show task info`,
+  },
+  {
+    value: "exit",
+    name: `${"7".magenta}. Exit`,
   },
 ];
-
-const message = "Select an option:".magenta;
 
 const main = async () => {
   while (true) {
     const selection = await showMenu(message, options);
     const confirmed = await pause();
-    if (selection === 6 && confirmed) {
+    if (selection === "exit" && confirmed) {
       break;
     }
     if (confirmed) {
