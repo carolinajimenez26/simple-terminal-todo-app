@@ -3,6 +3,7 @@ const {
   showMenu, 
   pause,
   handleOption,
+  loadData,
 } = require('./utils');
 const Tasks = require('./models/Tasks');
 
@@ -38,8 +39,11 @@ const options = [
   },
 ];
 
+const dataPath = './data';
+
 const main = async () => {
   let tasks = new Tasks();
+  loadData(dataPath, tasks);
   while (true) {
     const selection = await showMenu(message, options);
     const confirmed = await pause();

@@ -12,7 +12,7 @@ class Tasks {
   }
 
   get show() {
-    console.log('Here are you tasks:');
+    console.log('Here are your tasks:');
     for (const task of this.tasks) {
       if (!task.deleted) {
         console.log(task.description);

@@ -1,18 +1,30 @@
 const { v4: uuidv4 } = require('uuid');
+const fs = require('fs');
 
 class Task {
-  constructor(description) {
-    this.id = uuidv4();
-    this.createdAt = new Date();
+  constructor({
+      id,
+      createdAt,
+      description,
+      modifiedAt,
+      solved,
+      solvedAt,
+      deleted,
+      deletedAt
+    }) {
+    this.id = id || uuidv4();
+    this.createdAt = createdAt || new Date();
   
     this.description = description;
-    this.modifiedAt = null;
+    this.modifiedAt = modifiedAt || null;
 
-    this.solved = false;
-    this.solvedAt = null;
+    this.solved = solved || false;
+    this.solvedAt = solvedAt || null;
 
-    this.deleted = false;
-    this.deletedAt = null;
+    this.deleted = deleted || false;
+    this.deletedAt = deletedAt || null;
+
+    this.save();
   }
 
   get info() {
@@ -31,16 +43,34 @@ class Task {
   modify(description) {
     this.description = description;
     this.modifiedAt = new Date();
+    this.save();
   }
 
   markAsDone() {
     this.solved = true;
     this.solvedAt = new Date();
+    this.save();
   }
 
   delete() {
     this.deleted = true;
     this.deletedAt = new Date();
+    this.save();
+  }
+
+  save() {
+    const path = `./data/${this.id}.json`;
+    const data = {
+      id: this.id,
+      createdAt: this.createdAt,
+      description: this.description,
+      modifiedAt: this.modifiedAt,
+      solved: this.solved,
+      solvedAt: this.solvedAt,
+      deleted: this.deleted,
+      deletedAt: this.deletedAt,
+    };
+    fs.writeFileSync(path, JSON.stringify(data));
   }
 };
 

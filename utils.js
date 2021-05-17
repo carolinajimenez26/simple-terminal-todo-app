@@ -2,6 +2,7 @@
 
 const inquirer = require('inquirer');
 const Task = require('./models/Task');
+const fs = require('fs');
 
 const showTitle = () => console.log('============= TODO APP ==============='.magenta);
 
@@ -49,11 +50,26 @@ const Ask = async (question) => {
   return choice;
 }
 
+const loadData = async (path, tasks) => {
+  fs.readdir(path, (err, files) => {
+    if (err) {
+      return console.log(`Unable to scan directory: ${ err }`);
+    } 
+    files.forEach((file) => {
+      const taskInfo = require(`${path}/${file}`);
+      const task = new Task(taskInfo);
+      tasks.add(task);
+    });
+  });
+};
+
 const handleOption = async (option, tasks) => {
   switch (option) {
     case "add":
       const description = await Ask("Write a new task description:");
-      const task = new Task(description);
+      const task = new Task({
+        description
+      });
       console.log(task.info);
       tasks.add(task);
       console.log("Task was created!");
@@ -76,4 +92,5 @@ module.exports = {
   showMenu,
   pause,
   handleOption,
+  loadData,
 };
