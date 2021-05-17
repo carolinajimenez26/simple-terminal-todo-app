@@ -1,6 +1,7 @@
 "use strict";
 
 const inquirer = require('inquirer');
+const Task = require('./models/Task');
 
 const showTitle = () => console.log('============= TODO APP ==============='.magenta);
 
@@ -31,20 +32,35 @@ const pause = async () => {
   return choice;
 };
 
-const getExitOption = (options) => {
-  let exitOption = null;
-  options.forEach((opt) => {
-    if (opt.name.includes("Exit")) {
-      exitOption = opt.value;
+const Ask = async (question) => {
+  const { choice } = await inquirer.prompt([
+    {
+      type: "input",
+      name: "choice",
+      message: question,
+      validate: (value) => {
+        if (value.length === 0) {
+          return 'Please add a value';
+        }
+        return true;
+      },
     }
-  });
-  return exitOption;
-};
+  ]);
+  return choice;
+}
 
-const handleOption = (option) => {
+const handleOption = async (option, tasks) => {
   switch (option) {
     case "add":
+      const description = await Ask("Write a new task description:");
+      const task = new Task(description);
+      console.log(task.info);
+      tasks.add(task);
+      console.log("Task was created!");
+      break;
     case "showTasks": 
+      tasks.show;
+      break;
     case "modify": 
     case "delete": 
     case "mark": 
@@ -52,7 +68,7 @@ const handleOption = (option) => {
       console.log("I can handle it :D");
       break;
     default:
-    console.error("Error");
+      console.error("Error");
   }
 };
 

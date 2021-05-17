@@ -4,6 +4,7 @@ const {
   pause,
   handleOption,
 } = require('./utils');
+const Tasks = require('./models/Tasks');
 
 const message = "Select an option:".magenta;
 const options = [
@@ -38,6 +39,7 @@ const options = [
 ];
 
 const main = async () => {
+  let tasks = new Tasks();
   while (true) {
     const selection = await showMenu(message, options);
     const confirmed = await pause();
@@ -45,7 +47,7 @@ const main = async () => {
       break;
     }
     if (confirmed) {
-      handleOption(selection);
+      await handleOption(selection, tasks);
     }
   }
 };
