@@ -1,3 +1,4 @@
+require('colors');
 const Task = require('./Task');
 
 class Tasks {
@@ -12,12 +13,23 @@ class Tasks {
   }
 
   get show() {
-    console.log('Here are your tasks:');
+    console.log('Here are your tasks:'.cyan);
+    let i = 1;
     for (const task of this.tasks) {
       if (!task.deleted) {
-        console.log(task.description);
+        console.log(`${'*'.magenta} ${task.description}`);
       }
+      i += 1;
     }
+  }
+
+  get tasksDescriptionsAndIds() {
+    return this.tasks.map(task => {
+      return {
+        id: task.id,
+        description: task.description,
+      };
+    });
   }
 
   getTask(taskId) {

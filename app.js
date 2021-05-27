@@ -1,5 +1,6 @@
 require('colors');
 const { 
+  showTitle,
   showMenu, 
   pause,
   handleOption,
@@ -45,6 +46,7 @@ const main = async () => {
   let tasks = new Tasks();
   loadData(dataPath, tasks);
   while (true) {
+    showTitle();
     const selection = await showMenu(message, options);
     const confirmed = await pause();
     if (selection === "exit" && confirmed) {

@@ -8,7 +8,6 @@ const showTitle = () => console.log('============= TODO APP ==============='.mag
 
 const showMenu = async (message, options) => {
   // console.clear();
-  showTitle();
 
   const { choice } = await inquirer.prompt([
     {
@@ -64,31 +63,59 @@ const loadData = async (path, tasks) => {
 };
 
 const handleOption = async (option, tasks) => {
-  switch (option) {
-    case "add":
-      const description = await Ask("Write a new task description:");
-      const task = new Task({
-        description
-      });
-      console.log(task.info);
-      tasks.add(task);
-      console.log("Task was created!");
-      break;
-    case "showTasks": 
-      tasks.show;
-      break;
-    case "modify": 
-    case "delete": 
-    case "mark": 
-    case "showInfo":
-      console.log("I can handle it :D");
-      break;
-    default:
-      console.error("Error");
+  let handled = false;
+
+  if (option === "add") {
+    const description = await Ask("Write a new task description:");
+    const task = new Task({
+      description
+    });
+    console.log(task.info);
+    tasks.add(task);
+    console.log("Task was created!");
+    handled = true;
+  }
+  if (option === "showTasks") {
+    tasks.show;
+    handled = true;
+  }
+  if (option === "modify") {
+    const tasksDescriptionsAndIds = tasks.tasksDescriptionsAndIds;
+    const options = tasksDescriptionsAndIds.map(task => {
+      return {
+        value: task.id,
+        name: task.description,
+      };
+    });
+    console.log(tasksDescriptionsAndIds, options);
+    const message = "Select a task to modify:".magenta;
+    const taskChosenId = await showMenu(message, options);
+    console.log(taskChosenId);
+    const task = tasks.getTask(taskChosenId);
+    console.log(task.description);
+    const description = await Ask("Write a new task description:");
+    task.modify(description);
+    handled = true;
+  }
+  if (option === "delete") {
+    console.log("I can handle it :D");
+    handled = true;
+  }
+  if (option === "mark") {
+    console.log("I can handle it :D");
+    handled = true;
+  }
+  if (option === "showInfo") {
+    console.log("I can handle it :D");
+    handled = true;
+  }
+  if (!handled) {
+    console.error("Error");
   }
 };
 
 module.exports = {
+  showTitle,
   showMenu,
   pause,
   handleOption,
